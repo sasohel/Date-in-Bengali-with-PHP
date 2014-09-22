@@ -1,0 +1,57 @@
+<?php
+/**
+ * Date in bengali Class
+ *
+ * @author      Sohail Ahmad Sohel
+ * @link        https://github.com/sasohel/Date-in-Bengali-with-PHP
+ * 
+ */
+ class Date_in_bengali {
+         
+     public $translated_date = FALSE;
+     private $_numbers_in_bengali = array('০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯');
+
+
+     public function __construct($str){
+         $this->_input_str = $str;
+         $this->_translate_date_into_bengali();
+     }
+     
+     
+     /**
+     * To translate date in Bengali language.
+     *
+     * @access    private
+     * @return    void
+     */
+     private function _translate_date_into_bengali(){
+         // Check the date is valid or not
+         if($this->_check_date()){
+             $this->_input_str = str_split($this->_input_str);
+             
+             foreach($this->_input_str as $value){
+                 if(array_key_exists($value, $this->_numbers_in_bengali)){
+                     $this->translated_date .= $this->_numbers_in_bengali[$value];
+                 } else {
+                     $this->translated_date .= $value;
+                 }
+             }
+             
+         } else {
+             $this->translated_date = 'The date format is invalid. Use like this 12 16 1971';
+         }
+     }
+     
+     
+     /**
+     * To check the inputted string is a valid date or not.
+     *
+     * @access    private
+     * @return    boolean
+     */
+     private function _check_date(){
+         list($month, $day, $year) = explode(' ', $this->_input_str);
+         return checkdate($month, $day, $year);
+     }
+     
+ }
